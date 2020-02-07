@@ -1,10 +1,10 @@
 package CreateAccount;
 
-import java.sql.Connection;
-import java.sql.Statement;
+
+
 import java.util.Scanner;
 
-import AdminRole.TestConnection;
+
 import Login.testLogin;
 
 public class testUserAccount {

@@ -1,10 +1,14 @@
 package BusDetails;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface busDetailsDAO {
-	public void addBus(busDetails a) throws Exception;
-	public void removeBus(int busId) throws Exception;
-	public void updateBusTiming(busDetails a) throws Exception;
+	public void addBus(busDetails a);
+	public void removeBus(int busId) ;
+	public void updateBusTiming(busDetails a) ;
+	public  List<String> getFromLocation() ;
+	public  List<String> getToLocation() ;
+	
     
 }
