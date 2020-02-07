@@ -13,12 +13,12 @@ public class testUpdateBusTimings {
 		
 		System.out.println("Update Bus Timings:\n");
 		System.out.println("Enter bus Id:");
-		a.busId=sc.nextInt();
+		a.setBusId(sc.nextInt());
 		System.out.println("Enter Travelling Time(Starting):");
 		String startingTime=sc.next();
 		System.out.println("Enter Travelling Time(Ending):");
 		String endingTime=sc.next();
-		a.travellingTime=startingTime+" to "+endingTime;
+		a.setTravellingTime(startingTime+" to "+endingTime);
 		
 		obj.updateBusTiming(a);
 

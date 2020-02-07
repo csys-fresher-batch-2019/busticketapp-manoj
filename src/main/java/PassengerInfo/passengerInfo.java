@@ -22,14 +22,62 @@ public class passengerInfo {
 				+ passengerName + ", mobileNumber=" + mobileNumber + ", noOfTickets=" + noOfTickets + ", age=" + age
 				+ ", gender=" + gender + "]";
 	}
-	public int bookingId;
-	public int userId;
-	public int busId;
-	public String passengerName;
-	public Long mobileNumber;
-	public int noOfTickets;
-	public int age;
-	public String gender;
+	private int bookingId;
+	private int userId;
+	private int busId;
+	private String passengerName;
+	private Long mobileNumber;
+	private int noOfTickets;
+	private int age;
+	private String gender;
+	public int getBookingId() {
+		return bookingId;
+	}
+	public void setBookingId(int bookingId) {
+		this.bookingId = bookingId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getBusId() {
+		return busId;
+	}
+	public void setBusId(int busId) {
+		this.busId = busId;
+	}
+	public String getPassengerName() {
+		return passengerName;
+	}
+	public void setPassengerName(String passengerName) {
+		this.passengerName = passengerName;
+	}
+	public Long getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(Long mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+	public int getNoOfTickets() {
+		return noOfTickets;
+	}
+	public void setNoOfTickets(int noOfTickets) {
+		this.noOfTickets = noOfTickets;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 	
 	
 

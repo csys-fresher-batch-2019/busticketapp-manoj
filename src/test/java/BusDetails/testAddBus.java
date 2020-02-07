@@ -11,26 +11,26 @@ public class testAddBus {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter Bus Details:\n");
 		System.out.println("Enter Bus Id:");
-		a.busId=sc.nextInt();
+		a.setBusId(sc.nextInt());
 		System.out.println("Enter Bus Name:");
-		a.busName=sc.next();
+		a.setBusName(sc.next());
 		System.out.println("Enter From Location:");
-		a.fromLocation=sc.next();
+		a.setFromLocation(sc.next());
 		System.out.println("Enter To Location:");
-		a.toLocation=sc.next();
+		a.setToLocation(sc.next());
 		System.out.println("Enter Journey Date:");
-		a.journeyDate=sc.next();
+		a.setJourneyDate(sc.next());
 		System.out.println("Enter Ticket Price:");
-		a.ticketPrice=sc.nextInt();
+		a.setTicketPrice(sc.nextInt());
 		System.out.println("Enter Travelling Time(Starting):");
 		String startingTime=sc.next();
 		System.out.println("Enter Travelling Time(Ending):");
 		String endingTime=sc.next();
-		a.travellingTime=startingTime+" to "+endingTime;
+		a.setTravellingTime(startingTime+" to "+endingTime);
 		System.out.println("Enter Maximum Seats:");
-		a.maximumSeats=sc.nextInt();
+		a.setMaximumSeats(sc.nextInt());
 		System.out.println("Enter Available Seats:");
-		a.availableSeats=sc.nextInt();
+		a.setAvailableSeats(sc.nextInt());
 		
 		obj.addBus(a);
 		

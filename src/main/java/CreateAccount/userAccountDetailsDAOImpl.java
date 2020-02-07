@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Date;
+
 
 import AdminRole.TestConnection;
 
@@ -14,13 +13,13 @@ public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
 		try(Connection con = TestConnection.connection();){
 		String sql = "insert into user_account(user_name,user_id,user_password,gender,dob,contact_number,email_id) values(?,user_id.nextval,?,?,?,?,?)";
 		try(PreparedStatement pst = con.prepareStatement(sql);){
-		pst.setString(1, a.userName);
-		pst.setString(2, a.password);
-		pst.setString(3, a.gender);
-		java.sql.Date dob = java.sql.Date.valueOf(a.dob);
+		pst.setString(1, a.getUserName());
+		pst.setString(2, a.getPassword());
+		pst.setString(3, a.getGender());
+		java.sql.Date dob = java.sql.Date.valueOf(a.getDob());
 		pst.setDate(4, dob);
-		pst.setLong(5, a.contactNumber);
-		pst.setString(6, a.emailId);
+		pst.setLong(5, a.getContactNumber());
+		pst.setString(6, a.getEmailId());
 		pst.executeUpdate();
 
 		System.out.println("User Account created successfully\n");
@@ -28,7 +27,7 @@ public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
 		int userid = 0;
 		String sql1 = "select user_id from user_account where email_id=?";
 		try(PreparedStatement pst1 = con.prepareStatement(sql1);){
-		pst1.setString(1, a.emailId);
+		pst1.setString(1, a.getEmailId());
 		try(ResultSet row = pst1.executeQuery();){
 		if (row.next()) {
 			userid = row.getInt("user_id");

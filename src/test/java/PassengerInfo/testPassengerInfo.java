@@ -17,21 +17,21 @@ public class testPassengerInfo {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Please fill the following form:");
 		System.out.println("Enter User Id:");
-		a.userId=sc.nextInt();
-		if(obj2.validateLogin(a.userId)) {
+		a.setUserId(sc.nextInt());
+		if(obj2.validateLogin(a.getUserId())) {
 		System.out.println("Enter Bus Id:");
-		a.busId=sc.nextInt();
-		if(obj1.validateBusId(a.busId)) {
+		a.setBusId(sc.nextInt());
+		if(obj1.validateBusId(a.getBusId())) {
 		System.out.println("Enter Passenger's Name:");
-		a.passengerName=sc.next();
+		a.setPassengerName(sc.next());
 		System.out.println("Enter Passenger's Age:");
-		a.age=sc.nextInt();
+		a.setAge(sc.nextInt());
 		System.out.println("Enter Passenger's Gender:");
-		a.gender=sc.next();
+		a.setGender(sc.next());
 		System.out.println("Enter Mobile Number:");
-		a.mobileNumber=sc.nextLong();
+		a.setMobileNumber(sc.nextLong());
 		System.out.println("Enter no of Tickets:");
-		a.noOfTickets=sc.nextInt();
+		a.setNoOfTickets(sc.nextInt());
 		int bId=obj1.insertPassengerInfo(a);
 		System.out.println("Your Booking Id is:"+bId);
 		while(true) {

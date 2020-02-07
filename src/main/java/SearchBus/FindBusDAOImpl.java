@@ -27,12 +27,12 @@ public class FindBusDAOImpl implements FindBusDAO{
 			
 			FindBus f=new FindBus();
 	
-			f.busName=rows.getString("bus_name");
-			f.busId=rows.getInt("bus_id");
-			f.travellingTime=rows.getString("travelling_time");
-			f.ticketPrice=rows.getInt("ticket_price");
+			f.setBusName(rows.getString("bus_name"));
+			f.setBusId(rows.getInt("bus_id"));
+			f.setTravellingTime(rows.getString("travelling_time"));
+			f.setTicketPrice(rows.getInt("ticket_price"));
 			Statement stmt=con.createStatement();
-			ResultSet rs=stmt.executeQuery("select available_seats from seat_availability where bus_id="+f.busId);
+			try(ResultSet rs=stmt.executeQuery("select available_seats from seat_availability where bus_id="+f.getBusId());){
 			while(rs.next())
 			{
 				int seats=rs.getInt("available_seats");
@@ -42,7 +42,7 @@ public class FindBusDAOImpl implements FindBusDAO{
 				}
 			}
 		}		
-		
+		}
 		return buses1;}}}
 		catch (SQLException e) {
 			

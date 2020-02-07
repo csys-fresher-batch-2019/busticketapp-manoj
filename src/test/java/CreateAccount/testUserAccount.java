@@ -17,15 +17,15 @@ public class testUserAccount {
 		Scanner sc = new Scanner(System.in);
 		boolean test = true;
 		System.out.println("Enter user name:");
-		a.userName = sc.next();
+		a.setUserName(sc.next());
 		System.out.println("Enter password:");
-		a.password = sc.next();
+		a.setPassword(sc.next());
 		System.out.println("Enter gender(M/F/others):");
-		a.gender = sc.next();
+		a.setGender(sc.next());
 		System.out.println("Enter DOB:");
-		a.dob = sc.next();
+		a.setDob(sc.next());
 		System.out.println("Enter contact number:");
-		a.contactNumber = sc.nextLong();
+		a.setContactNumber(sc.nextLong());
 
 		int userid = 0;
 		while (test) {
@@ -34,7 +34,7 @@ public class testUserAccount {
 		boolean mail=obj.checkEmailId(mailId);
 		if (mail==true) {
 			test = false;
-			a.emailId=mailId;
+			a.setEmailId(mailId);
 			userid = obj.addUser(a);
 
 		} else {

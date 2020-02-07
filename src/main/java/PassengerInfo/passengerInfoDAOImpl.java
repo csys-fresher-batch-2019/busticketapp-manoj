@@ -8,55 +8,55 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import AdminRole.TestConnection;
-import SearchBus.FindBus;
+
 
 public class passengerInfoDAOImpl implements passengerInfoDAO {
 	public int insertPassengerInfo(passengerInfo a) {
 		try (Connection con = TestConnection.connection();) {
 			String sql = "insert into passenger_details(booking_id,user_id,bus_id,passenger_name,age,gender,mobile_number,no_of_tickets) values (sequence_booking_id.nextval,?,?,?,?,?,?,?)";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
-				pst.setInt(1, a.userId);
-				pst.setInt(2, a.busId);
-				pst.setString(3, a.passengerName);
-				pst.setInt(4, a.age);
-				pst.setString(5, a.gender);
-				pst.setLong(6, a.mobileNumber);
-				pst.setInt(7, a.noOfTickets);
+				pst.setInt(1, a.getUserId());
+				pst.setInt(2, a.getBusId());
+				pst.setString(3, a.getPassengerName());
+				pst.setInt(4, a.getAge());
+				pst.setString(5, a.getGender());
+				pst.setLong(6, a.getMobileNumber());
+				pst.setInt(7, a.getNoOfTickets());
 				pst.executeUpdate();
-				int numTickets = a.noOfTickets;
+				int numTickets = a.getNoOfTickets();
 
 				System.out.println("you are successfully entered your details..\n");
 				try (Statement stmt = con.createStatement();) {
 					String sql1 = "select sequence_booking_id.currval from dual";
-					ResultSet rs = stmt.executeQuery(sql1);
+					try(ResultSet rs = stmt.executeQuery(sql1);){
 					rs.next();
 
 					int bId = rs.getInt("currval");
 
-					String sql2 = "update seat_availability set available_seats=available_seats-" + a.noOfTickets
+					String sql2 = "update seat_availability set available_seats=available_seats-" + a.getNoOfTickets()
 							+ " where bus_id=?";
 					try (PreparedStatement pst1 = con.prepareStatement(sql2);) {
-						pst1.setInt(1, a.busId);
+						pst1.setInt(1, a.getBusId());
 						pst1.executeUpdate();
 
 						int price = 0, totalPrice = 0;
 						String sql3 = "select ticket_price from bus_details where bus_id=?";
 						try (PreparedStatement pst2 = con.prepareStatement(sql3);) {
-							pst2.setInt(1, a.busId);
+							pst2.setInt(1, a.getBusId());
 							try (ResultSet rs1 = pst2.executeQuery();) {
 								rs1.next();
 								price = rs1.getInt("ticket_price");
-								totalPrice = price * a.noOfTickets;
+								totalPrice = price * a.getNoOfTickets();
 
 								Statement stmt2 = con.createStatement();
 								String sql4 = "insert into payment_status(user_id,bus_id,booking_id,total_price)values("
-										+ a.userId + "," + a.busId + "," + bId + "," + totalPrice + ")";
+										+ a.getUserId() + "," + a.getBusId() + "," + bId + "," + totalPrice + ")";
 								stmt2.executeUpdate(sql4);
 								return bId;
 							}
 						}
 					}
-				}
+				}}
 			}
 		} catch (SQLException e) {
 
@@ -75,14 +75,14 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 					while (rows.next()) {
 
 						passengerInfo p = new passengerInfo();
-						p.bookingId = rows.getInt("booking_id");
-						p.userId = rows.getInt("user_id");
-						p.busId = rows.getInt("bus_id");
-						p.passengerName = rows.getString("passenger_name");
-						p.mobileNumber = rows.getLong("mobile_number");
-						p.noOfTickets = rows.getInt("no_of_tickets");
-						p.age = rows.getInt("age");
-						p.gender = rows.getString("gender");
+						p.setBookingId(rows.getInt("booking_id"));
+						p.setUserId(rows.getInt("user_id"));
+						p.setBusId(rows.getInt("bus_id"));
+						p.setPassengerName(rows.getString("passenger_name"));
+						p.setMobileNumber(rows.getLong("mobile_number"));
+						p.setNoOfTickets(rows.getInt("no_of_tickets"));
+						p.setAge(rows.getInt("age"));
+						p.setGender(rows.getString("gender"));
 
 						details.add(p);
 					}
@@ -166,7 +166,7 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 			String bus = "select bus_id from bus_details where bus_id = ?";
 			try (PreparedStatement smt9 = con.prepareStatement(bus);) {
 				smt9.setInt(1, busId);
-				ResultSet row9 = smt9.executeQuery();
+				try(ResultSet row9 = smt9.executeQuery();){
 				int busid = 0;
 				if (row9.next()) {
 					busid = row9.getInt("bus_id");
@@ -179,7 +179,7 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 					return false;
 				}
 
-			}
+			}}
 		} catch (SQLException e) {
 
 			e.printStackTrace();
