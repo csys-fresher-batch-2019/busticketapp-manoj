@@ -31,7 +31,7 @@ public class FindBusDAOImpl implements FindBusDAO{
 			f.setBusId(rows.getInt("bus_id"));
 			f.setTravellingTime(rows.getString("travelling_time"));
 			f.setTicketPrice(rows.getInt("ticket_price"));
-			Statement stmt=con.createStatement();
+			try(Statement stmt=con.createStatement();){
 			try(ResultSet rs=stmt.executeQuery("select available_seats from seat_availability where bus_id="+f.getBusId());){
 			while(rs.next())
 			{
@@ -41,7 +41,8 @@ public class FindBusDAOImpl implements FindBusDAO{
 			buses1.add(f);
 				}
 			}
-		}		
+		}
+			}
 		}
 		return buses1;}}}
 		catch (SQLException e) {

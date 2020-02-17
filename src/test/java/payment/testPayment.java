@@ -1,29 +1,29 @@
-package HomePage;
+package payment;
 
 import java.util.Scanner;
 
-import CreateAccount.testUserAccount;
-import logger.Logger;
-import Login.testLogin;
 
-public class testHomePage {
+import logger.Logger;
+
+public class testPayment {
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
+		
+
 		Logger out=Logger.getInstance();
-		out.info(" ====Welcome to eBus==== ");
-		out.info(" 1.Existing User \n 2.New User");
+		out.info("Payment Page \n");
+		out.info(" 1.To pay using credit card \n 2.To pay using wallet");
 		out.getInput("Press 1 or 2");
 		Scanner sc=new Scanner(System.in);
 		while(true) {
 		int choice=sc.nextInt();
 		if(choice==1) {
-			testLogin.main(null);
+			testBank.main(null);
 			
 		}
 		else if(choice==2) {
-			out.info("Create New Account ");
-			testUserAccount.main(null);
+			
+			testWallet.main(null);
 		
 		}
 		else {

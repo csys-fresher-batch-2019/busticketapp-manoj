@@ -4,7 +4,7 @@ package CreateAccount;
 
 import java.util.Scanner;
 
-
+import logger.Logger;
 import Login.testLogin;
 
 public class testUserAccount {
@@ -13,23 +13,27 @@ public class testUserAccount {
 		// TODO Auto-generated method stub
 		userAccountDetailsDAOImpl obj = new userAccountDetailsDAOImpl();
 		userAccountDetails a = new userAccountDetails();
+		Logger out=Logger.getInstance();
+
+		
+		
 
 		Scanner sc = new Scanner(System.in);
 		boolean test = true;
-		System.out.println("Enter user name:");
+	out.getInput("Enter user name:");
 		a.setUserName(sc.next());
-		System.out.println("Enter password:");
+		out.getInput("Enter password:");
 		a.setPassword(sc.next());
-		System.out.println("Enter gender(M/F/others):");
+		out.getInput("Enter gender(M/F/others):");
 		a.setGender(sc.next());
-		System.out.println("Enter DOB:");
+		out.getInput("Enter DOB:");
 		a.setDob(sc.next());
-		System.out.println("Enter contact number:");
+		out.getInput("Enter contact number:");
 		a.setContactNumber(sc.nextLong());
 
 		int userid = 0;
 		while (test) {
-			System.out.println("Enter EmailId:");
+			out.getInput("Enter EmailId:");
 		String mailId= sc.next();
 		boolean mail=obj.checkEmailId(mailId);
 		if (mail==true) {
@@ -38,12 +42,12 @@ public class testUserAccount {
 			userid = obj.addUser(a);
 
 		} else {
-			System.out.println("Email Id already exists...try another email Id!!! \n");
+			out.info("Email Id already exists...try another email Id!!! \n");
 		}}
-		System.out.println("Thank you for creating account.....");
-		System.out.println("Your User Id:");
-		System.out.println(userid);
-		System.out.println("\n");
+		out.info("Thank you for creating account.....");
+		out.info("Your User Id:");
+		out.info(userid);
+		out.info("\n");
 		
 		while(true)
 		{
@@ -53,7 +57,7 @@ public class testUserAccount {
 			testLogin.main(null);
 			break;
 		} else {
-			System.out.println("You are selected incorrect option...");
+			out.info("You are selected incorrect option...");
 		}
 		}
 	}

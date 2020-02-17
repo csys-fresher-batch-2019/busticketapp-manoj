@@ -22,7 +22,7 @@ public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
 		pst.setString(6, a.getEmailId());
 		pst.executeUpdate();
 
-		System.out.println("User Account created successfully\n");
+		//System.out.println("User Account created successfully\n");
 
 		int userid = 0;
 		String sql1 = "select user_id from user_account where email_id=?";

@@ -2,6 +2,8 @@ package BusDetails;
 
 import java.util.Scanner;
 
+import logger.Logger;
+
 public class testUpdateBusTimings {
 
 	public static void main(String[] args) throws Exception {
@@ -9,14 +11,15 @@ public class testUpdateBusTimings {
 		busDetailsDAOImpl obj=new busDetailsDAOImpl();
 		
 		busDetails a=new busDetails();
+		Logger out=Logger.getInstance();
 		Scanner sc=new Scanner(System.in);
 		
-		System.out.println("Update Bus Timings:\n");
-		System.out.println("Enter bus Id:");
+		out.info("Update Bus Timings:\n");
+		out.getInput("Enter bus Id:");
 		a.setBusId(sc.nextInt());
-		System.out.println("Enter Travelling Time(Starting):");
+		out.getInput("Enter Travelling Time(Starting):");
 		String startingTime=sc.next();
-		System.out.println("Enter Travelling Time(Ending):");
+		out.getInput("Enter Travelling Time(Ending):");
 		String endingTime=sc.next();
 		a.setTravellingTime(startingTime+" to "+endingTime);
 		

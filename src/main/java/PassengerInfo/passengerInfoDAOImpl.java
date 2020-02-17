@@ -19,13 +19,14 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 				pst.setInt(2, a.getBusId());
 				pst.setString(3, a.getPassengerName());
 				pst.setInt(4, a.getAge());
+				
 				pst.setString(5, a.getGender());
 				pst.setLong(6, a.getMobileNumber());
 				pst.setInt(7, a.getNoOfTickets());
 				pst.executeUpdate();
 				int numTickets = a.getNoOfTickets();
 
-				System.out.println("you are successfully entered your details..\n");
+				//System.out.println("you are successfully entered your details..\n");
 				try (Statement stmt = con.createStatement();) {
 					String sql1 = "select sequence_booking_id.currval from dual";
 					try(ResultSet rs = stmt.executeQuery(sql1);){
@@ -33,12 +34,7 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 
 					int bId = rs.getInt("currval");
 
-					String sql2 = "update seat_availability set available_seats=available_seats-" + a.getNoOfTickets()
-							+ " where bus_id=?";
-					try (PreparedStatement pst1 = con.prepareStatement(sql2);) {
-						pst1.setInt(1, a.getBusId());
-						pst1.executeUpdate();
-
+					
 						int price = 0, totalPrice = 0;
 						String sql3 = "select ticket_price from bus_details where bus_id=?";
 						try (PreparedStatement pst2 = con.prepareStatement(sql3);) {
@@ -48,15 +44,16 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 								price = rs1.getInt("ticket_price");
 								totalPrice = price * a.getNoOfTickets();
 
-								Statement stmt2 = con.createStatement();
+								try(Statement stmt2 = con.createStatement();){
 								String sql4 = "insert into payment_status(user_id,bus_id,booking_id,total_price)values("
 										+ a.getUserId() + "," + a.getBusId() + "," + bId + "," + totalPrice + ")";
 								stmt2.executeUpdate(sql4);
 								return bId;
 							}
+							}
 						}
 					}
-				}}
+				}
 			}
 		} catch (SQLException e) {
 
@@ -117,13 +114,13 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 						pst8.setInt(1, bookingId);
 						pst8.executeUpdate();
 
-						String sql9 = "update passenger_details set no_of_tickets= 0 where booking_id=?";
+						/*String sql9 = "update passenger_details set no_of_tickets= 0 where booking_id=?";
 						try (PreparedStatement pst9 = con.prepareStatement(sql9);) {
 							pst9.setInt(1, bookingId);
 							pst9.executeUpdate();
 						}
-					}
-				}
+					}*/
+				}}
 			}
 		} catch (SQLException e) {
 
@@ -187,4 +184,65 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 
 		}
 	}
+	public int totalPrice(int bookingId) {
+		try (Connection con = TestConnection.connection();) {
+			String sql = "select total_price from payment_status where booking_id=? ";
+			try (PreparedStatement pst = con.prepareStatement(sql);) {
+				pst.setInt(1, bookingId);
+				try (ResultSet row = pst.executeQuery();) {
+					int price = 0;
+					if (row.next()) {
+						price = row.getInt("total_price");
+
+					}
+					return price;
+				}
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public ArrayList<passengerInfo> MyBookings(int userId) {
+		try (Connection con = TestConnection.connection();) {
+			String sql5 = "select *from passenger_details where user_id=? and booking_status='booked'";
+			try (PreparedStatement pst5 = con.prepareStatement(sql5);) {
+				pst5.setInt(1,userId);
+				try (ResultSet rows = pst5.executeQuery();) {
+					ArrayList<passengerInfo> details = new ArrayList<passengerInfo>();
+					while (rows.next()) {
+
+						passengerInfo p = new passengerInfo();
+						p.setBookingId(rows.getInt("booking_id"));
+						p.setUserId(rows.getInt("user_id"));
+						p.setBusId(rows.getInt("bus_id"));
+						p.setPassengerName(rows.getString("passenger_name"));
+						p.setMobileNumber(rows.getLong("mobile_number"));
+						p.setNoOfTickets(rows.getInt("no_of_tickets"));
+						p.setAge(rows.getInt("age"));
+						p.setGender(rows.getString("gender"));
+
+						details.add(p);
+					}
+
+					return details;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+
+		}
+
+	
+	
+	}
+
+
+	
 }
+

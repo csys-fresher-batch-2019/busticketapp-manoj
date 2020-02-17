@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import CreateAccount.userAccountDetails;
 import CreateAccount.userAccountDetailsDAOImpl;
+import logger.Logger;
 
 public class testForgetPassword {
 
@@ -11,32 +12,34 @@ public class testForgetPassword {
 		// TODO Auto-generated method stub
 		userAccountDetailsDAOImpl obj = new userAccountDetailsDAOImpl();
 		userAccountDetails a = new userAccountDetails();
+		Logger out=Logger.getInstance();
+
 		Scanner sc = new Scanner(System.in);
 		int userId=0;
 		boolean test = true, test1 = true;
 		while (test) {
-			System.out.println("Enter your userId:");
+			out.getInput("Enter your userId:");
 			userId = sc.nextInt();
-			System.out.println("Enter your emailId:");
+			out.getInput("Enter your emailId:");
 			String emailId = sc.next();
 			if (obj.validateLogin(userId) && obj.checkEmailId2(emailId,userId)) {
 				test = false;
 				while (test1) {
-					System.out.println("Type New password ");
+					out.getInput("Type New password ");
 					String a1 = sc.next();
-					System.out.println("Confirm password");
+					out.getInput("Confirm password");
 					String a2 = sc.next();
 					if (a1.equals(a2)) {
 						test1 = false;
 						if(obj.forgetPassword(userId,a1)) {
-							System.out.println("Password updated");
+							out.info("Password updated");
 						}
 					} else {
-						System.out.println("Password Mismatch");
+					out.info("Password Mismatch");
 					}
 				}
 			} else {
-				System.out.println("Invalid userid or mailid !!");
+				out.info("Invalid userid or mailid !!");
 			}
 		}
 	}

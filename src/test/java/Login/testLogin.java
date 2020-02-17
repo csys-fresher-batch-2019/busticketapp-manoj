@@ -6,20 +6,22 @@ import java.util.Scanner;
 
 import CreateAccount.userAccountDetailsDAOImpl;
 import ForgetPassword.testForgetPassword;
+import logger.Logger;
 import SearchBus.testFindBus;
 import UpdatePassword.testUpdatePassword;
+import bookingDetails.testMyBookings;
 
 public class testLogin {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		userAccountDetailsDAOImpl obj= new userAccountDetailsDAOImpl();
-		
+		Logger out=Logger.getInstance();
 		Scanner sc=new Scanner(System.in);
 	
-		System.out.println("Enter User Id:");
+    out.getInput("Enter User Id:");
 		int userid=sc.nextInt();
-		System.out.println("Enter Password:");
+		  out.getInput("Enter Password:");
 		String password=sc.next();
 		
 		boolean validate=obj.validateLogin(userid);
@@ -28,9 +30,10 @@ public class testLogin {
 			
 			
 			if(obj.validateLogin2(userid,password)) {
-				System.out.println("\nLogin Successfull");
-				System.out.println("Select 1 to search Buses:");
-				System.out.println("Select 2 to update Password:");
+				out.info("\nLogin Successfull");
+				  out.getInput("Select 1 to search Buses:");
+				  out.getInput("Select 2 to update Password:");
+				  out.getInput("Select 3 for My Bookings");
 				while(true)
 				{
 				int choice=sc.nextInt();
@@ -43,19 +46,24 @@ public class testLogin {
 					testUpdatePassword.main(null);
 					break;
 				}
+				else if(choice==3) {
+					testMyBookings.main(null);
+					break;
+					
+				}
 				else
 				{
-					System.out.println("Please enter 1 or 2");
+					  out.getInput("Please enter 1 or 2 or 3");
 				}
 				}
 			
 			}
 			else
 			{
-				System.out.println("Invalid Username or Password.....\n");
+				out.info("Invalid Username or Password.....\n");
 				while(true) {
-				System.out.println("press 1 to try again:");
-				System.out.println("press 2 if you forgot your password:");
+					  out.getInput("press 1 to try again:");
+					  out.getInput("press 2 if you forgot your password:");
 				int a=sc.nextInt();
 				if(a==1)
 				{
@@ -69,16 +77,16 @@ public class testLogin {
 			    }
 			    else
 			    {
-			    	System.out.println("you are selected incorrect option:");
+			    	out.info("you are selected incorrect option:");
 			    }
 			}
 			}
 		}
 		else {
-			System.out.println("Invalid Username or Password\n");
+			out.info("Invalid Username or Password\n");
 			while(true) {
-			System.out.println("press 1 to try again:");
-			System.out.println("press 2 if you forgot your password:");
+				  out.getInput("press 1 to try again:");
+				  out.getInput("press 2 if you forgot your password:");
 			int a=sc.nextInt();
 			if(a==1)
 		    {
@@ -92,7 +100,7 @@ public class testLogin {
 			}
 		    else
 		    {
-		    	System.out.println("you are selected incorrect option:");
+		    	out.info("you are selected incorrect option:");
 		    }
 			}
 		}

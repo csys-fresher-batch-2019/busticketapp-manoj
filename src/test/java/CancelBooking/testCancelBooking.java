@@ -2,6 +2,7 @@ package CancelBooking;
 
 import java.util.Scanner;
 
+import logger.Logger;
 import PassengerInfo.passengerInfoDAOImpl;
 
 public class testCancelBooking {
@@ -10,14 +11,16 @@ public class testCancelBooking {
 		// TODO Auto-generated method stub
 		passengerInfoDAOImpl obj1=new passengerInfoDAOImpl();
 		Scanner sc=new Scanner(System.in);
-		System.out.println("Enter Booking Id:");
+		Logger out=Logger.getInstance();
+
+		out.getInput("Enter Booking Id:");
 		int bookingId=sc.nextInt();
 		if (obj1.validateBookingId(bookingId)) {
 		obj1.cancelBooking(bookingId);
-		System.out.println("your booking is cancelled successfully");}
+		out.info("your booking is cancelled successfully");}
 		else
 		{
-			System.out.println("Enter valid booking id...try again");
+			out.info("Enter valid booking id...try again");
 			testCancelBooking.main(null);
 		}
 		

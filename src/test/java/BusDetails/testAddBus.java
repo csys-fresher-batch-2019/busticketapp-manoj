@@ -2,34 +2,37 @@ package BusDetails;
 
 import java.util.Scanner;
 
+import logger.Logger;
+
 public class testAddBus {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		busDetailsDAOImpl obj=new busDetailsDAOImpl();
 		busDetails a=new busDetails();
+		Logger out=Logger.getInstance();
 		Scanner sc=new Scanner(System.in);
-		System.out.println("Enter Bus Details:\n");
-		System.out.println("Enter Bus Id:");
+        out.info("Enter Bus Details:\n");
+		out.getInput("Enter Bus Id:");
 		a.setBusId(sc.nextInt());
-		System.out.println("Enter Bus Name:");
+		out.getInput("Enter Bus Name:");
 		a.setBusName(sc.next());
-		System.out.println("Enter From Location:");
+		out.getInput("Enter From Location:");
 		a.setFromLocation(sc.next());
-		System.out.println("Enter To Location:");
+		out.getInput("Enter To Location:");
 		a.setToLocation(sc.next());
-		System.out.println("Enter Journey Date:");
+		out.getInput("Enter Journey Date:");
 		a.setJourneyDate(sc.next());
-		System.out.println("Enter Ticket Price:");
+		out.getInput("Enter Ticket Price:");
 		a.setTicketPrice(sc.nextInt());
-		System.out.println("Enter Travelling Time(Starting):");
+		out.getInput("Enter Travelling Time(Starting):");
 		String startingTime=sc.next();
-		System.out.println("Enter Travelling Time(Ending):");
+		out.getInput("Enter Travelling Time(Ending):");
 		String endingTime=sc.next();
 		a.setTravellingTime(startingTime+" to "+endingTime);
-		System.out.println("Enter Maximum Seats:");
+		out.getInput("Enter Maximum Seats:");
 		a.setMaximumSeats(sc.nextInt());
-		System.out.println("Enter Available Seats:");
+		out.getInput("Enter Available Seats:");
 		a.setAvailableSeats(sc.nextInt());
 		
 		obj.addBus(a);
