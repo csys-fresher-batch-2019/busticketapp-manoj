@@ -4,6 +4,7 @@ public class availableSeats {
 	private int busId;
 	private int availableSeats;
 	private int maxseats;
+	
 	public int getBusId() {
 		return busId;
 	}
