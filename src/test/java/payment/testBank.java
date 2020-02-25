@@ -3,6 +3,7 @@ package payment;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import CancelBooking.testCancelBooking;
 import creditcard.Card;
 import creditcard.PaymentResponse;
 import logger.Logger;
@@ -20,20 +21,18 @@ public class testBank {
 		System.out.println("Enter CVV:");
 		int cvv=scan.nextInt();
 		
-		out.getInput("Enter comments:");
-	     String comment=scan.next();
+		
 	     out.getInput ("Enter total amount");
 	     float amount=scan.nextFloat();
-	     Card pay = new Card();
-	     PaymentResponse payment = pay.cardpayment(cardNo, exp, cvv, amount, comment);
-	     int transId = payment.getTransactionId();
-	     out.info(payment.isStatus());
-	     if (payment.isStatus()) {
+	     
+	     boolean Boolean = true;
+	    
+	     if (Boolean) {
 	    	 paymentDAOImpl obj=new paymentDAOImpl();
 	    	 out.info("Enter BookingId:");
 			int bookingId=scan.nextInt();
 			obj.paymentSuccess(bookingId);
-			out.getInput(transId);
+			
 	     
 			out.info(" !!! Successfully Booked !!! ");
 			while(true)
@@ -42,6 +41,7 @@ public class testBank {
 			int choice=scan.nextInt();
 			if(choice==1)
 			{
+				testCancelBooking.main(null);
 				break;
 			}
 			else

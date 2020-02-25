@@ -12,6 +12,7 @@ public class passengerInfo {
 		this.noOfTickets = noOfTickets;
 		this.age = age;
 		this.gender = gender;
+		
 	}
 	public passengerInfo() {
 		// TODO Auto-generated constructor stub

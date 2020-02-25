@@ -12,8 +12,8 @@ public class testPayment {
 
 		Logger out=Logger.getInstance();
 		out.info("Payment Page \n");
-		out.info(" 1.To pay using credit card \n 2.To pay using wallet");
-		out.getInput("Press 1 or 2");
+		out.info(" 1.To pay using credit card ");
+		out.getInput("Press 1");
 		Scanner sc=new Scanner(System.in);
 		while(true) {
 		int choice=sc.nextInt();
@@ -21,13 +21,9 @@ public class testPayment {
 			testBank.main(null);
 			
 		}
-		else if(choice==2) {
-			
-			testWallet.main(null);
 		
-		}
 		else {
-			out.info("Please Enter 1 or 2");
+			out.info("Please Enter 1 ...");
 			
 		}
 		

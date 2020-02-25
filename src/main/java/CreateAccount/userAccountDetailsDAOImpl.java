@@ -7,9 +7,11 @@ import java.sql.SQLException;
 
 
 import AdminRole.TestConnection;
+import Exception.DbException;
+import Exception.infoMessages;
 
 public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
-	public int addUser(userAccountDetails a)  {
+	public int addUser(userAccountDetails a) throws Exception  {
 		try(Connection con = TestConnection.connection();){
 		String sql = "insert into user_account(user_name,user_id,user_password,gender,dob,contact_number,email_id) values(?,user_id.nextval,?,?,?,?,?)";
 		try(PreparedStatement pst = con.prepareStatement(sql);){
@@ -37,15 +39,21 @@ public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
 		return userid;
 		}}}}
 		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(infoMessages.AVAILABLESEATS);
+			
+		}
+catch (Exception e) {
 			
 			e.printStackTrace();
-			return 0;
+			throw new DbException(infoMessages.CONNECTION);
+			
 		}
 		
 
 	}
 
-	public boolean forgetPassword(int userid, String password)  {
+	public boolean forgetPassword(int userid, String password) throws Exception  {
 		try(Connection con = TestConnection.connection();){
 
 		String sql2 = "update user_account set user_password=? where user_id=?";
@@ -64,12 +72,19 @@ public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
 		catch (SQLException e) {
 			
 			e.printStackTrace();
-			return false;
+			throw new DbException(infoMessages.FORGETPASSWORD);
+	
+		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
 		}
 
 	}
 
-	public boolean checkEmailId(String emailId)  {
+	public boolean checkEmailId(String emailId) throws Exception  {
 		try(Connection con = TestConnection.connection();){
 		String email1 = "select email_id from user_account where email_id=?";
 		try(PreparedStatement smt = con.prepareStatement(email1);){
@@ -91,13 +106,21 @@ public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
 		catch (SQLException e) {
 			
 			e.printStackTrace();
-			return false;
+			throw new DbException(infoMessages.CHECKEMAIL);
+			
 		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
+		}
+
 
 	}
 	
 
-	public boolean checkEmailId2(String emailId,int userId) {
+	public boolean checkEmailId2(String emailId,int userId) throws Exception {
 		try(Connection con = TestConnection.connection();){
 		String email1 = "select email_id from user_account where user_id=?";
 		try(PreparedStatement smt = con.prepareStatement(email1);){
@@ -118,12 +141,20 @@ public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
+			throw new DbException(infoMessages.CHECKEMAIL);
+			
 		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
+		}
+
 
 	}
 
-	public boolean validateLogin(int userId) {
+	public boolean validateLogin(int userId) throws Exception {
 		try(Connection con = TestConnection.connection();){
 		String sql3 = "select user_id from user_account where user_id = ?";
 		try(PreparedStatement smt2 = con.prepareStatement(sql3);){
@@ -144,12 +175,19 @@ public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
 		catch (SQLException e) {
 		
 			e.printStackTrace();
-			return false;
+			throw new DbException(infoMessages.VALIDATELOGIN);
+		
+		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
 		}
 
 	}
 
-	public boolean validateLogin2(int userId, String password)  {
+	public boolean validateLogin2(int userId, String password) throws Exception  {
 		try(Connection con = TestConnection.connection();){
 		String sql4 = "select user_password from user_account where user_id = ?";
 		try(PreparedStatement smt3 = con.prepareStatement(sql4);){
@@ -169,6 +207,13 @@ public class userAccountDetailsDAOImpl implements userAccountDetailsDAO {
 	catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-		return false;
+		throw new DbException(infoMessages.VALIDATELOGIN);
 	}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
+		}
+
 }}

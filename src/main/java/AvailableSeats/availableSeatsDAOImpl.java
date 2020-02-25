@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import AdminRole.TestConnection;
+import Exception.DbException;
+import Exception.infoMessages;
 
 public class availableSeatsDAOImpl implements availableSeatsDAO {
 
-	public int seatavail(int busid) {
+	public int seatavail(int busid) throws  Exception {
 		try (Connection con = TestConnection.connection();) {
 			String sql = "select available_seats from seat_availability where bus_id=? ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
@@ -26,8 +28,12 @@ public class availableSeatsDAOImpl implements availableSeatsDAO {
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
-			return 0;
+			throw new DbException(infoMessages.AVAILABLESEATS);
+	}catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
 		}
-	}
 
-}
+
+}}

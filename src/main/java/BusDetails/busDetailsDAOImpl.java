@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import AdminRole.TestConnection;
+import Exception.DbException;
+import Exception.infoMessages;
 
 
 public class busDetailsDAOImpl implements busDetailsDAO {
-	public void addBus(busDetails a) {
+	public void addBus(busDetails a) throws Exception {
 		try(Connection con = TestConnection.connection();){
 		String sql = "insert into bus_details (bus_id,bus_name,from_location,to_location,journey_date,ticket_price,travelling_time) values (?,?,?,?,?,?,?)";
 		try(PreparedStatement pst = con.prepareStatement(sql);){
@@ -43,14 +45,20 @@ public class busDetailsDAOImpl implements busDetailsDAO {
 		System.out.println("Bus Details are added successfully\n");
 		
         }}}
-        catch (SQLException e) {
+		catch(SQLException e) {
+			e.printStackTrace();
+			throw new DbException(infoMessages.ADDBUS);
+		}
+        catch (Exception e) {
 			
 			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
 			
 		}
 		
 		}
-	public void removeBus(int busId) {
+	public void removeBus(int busId) throws Exception {
   try( Connection con = TestConnection.connection();){
 		
 		String sql = "delete from bus_details where bus_id=?";
@@ -68,11 +76,18 @@ public class busDetailsDAOImpl implements busDetailsDAO {
   catch (SQLException e) {
 		
 		e.printStackTrace();
+		throw new DbException(infoMessages.REMOVEBUS);
+		
+	}
+  catch (Exception e) {
+		
+		e.printStackTrace();
+		throw new DbException(infoMessages.CONNECTION);
 		
 	}
 		
 	}
-	public void updateBusTiming(busDetails a) {
+	public void updateBusTiming(busDetails a) throws Exception {
 		   try(Connection con = TestConnection.connection();){
 				
 				String sql = "update bus_details set travelling_time=? where bus_id=?";
@@ -90,13 +105,23 @@ public class busDetailsDAOImpl implements busDetailsDAO {
 		   catch (SQLException e) {
 				
 				e.printStackTrace();
+				throw new DbException(infoMessages.BUSTIMEUPDATE);
+				
+		   }
+				 catch (Exception e) {
+						
+						e.printStackTrace();
+						throw new DbException(infoMessages.CONNECTION);
+						
+						
+					}
 				
 			}
 				
 
-}
+
 	
-	public List<String> getFromLocation() {
+	public List<String> getFromLocation() throws Exception {
 		
 		try(Connection con = TestConnection.connection();){
 		String sql="select distinct from_location from bus_details";
@@ -114,10 +139,19 @@ public class busDetailsDAOImpl implements busDetailsDAO {
 		catch (SQLException e) {
 			
 			e.printStackTrace();
-			return null;
+			throw new DbException(infoMessages.FROMLOCATION);
+			
+		
+		}
+		catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
+			
 		}
 	}
-	public List<String> getToLocation() {
+	public List<String> getToLocation() throws Exception {
 		
 		try(Connection con = TestConnection.connection();){
 		String sql="select distinct to_location from bus_details";
@@ -135,9 +169,19 @@ public class busDetailsDAOImpl implements busDetailsDAO {
 	catch (SQLException e) {
 		
 		e.printStackTrace();
+		throw new DbException(infoMessages.TOLOCATION);
 		
-		return null;
+		
+		
+
 	}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
+			
+		}
 	
 	}}
 

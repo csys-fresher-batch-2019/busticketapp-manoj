@@ -8,9 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import AdminRole.TestConnection;
+import Exception.DbException;
+import Exception.infoMessages;
 
 public class FindBusDAOImpl implements FindBusDAO{
-	public ArrayList<FindBus> searchbus(String fromLocation, String toLocation, String journeyDate)  {
+	public ArrayList<FindBus> searchbus(String fromLocation, String toLocation, String journeyDate) throws Exception  {
 		
 		
 		
@@ -48,8 +50,17 @@ public class FindBusDAOImpl implements FindBusDAO{
 		catch (SQLException e) {
 			
 			e.printStackTrace();
-			return null;
+			throw new DbException(infoMessages.FINDBUS);
+			
+		
 		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
+		}
+
 	
 	}
 }

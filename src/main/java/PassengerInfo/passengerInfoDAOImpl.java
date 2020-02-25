@@ -8,10 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import AdminRole.TestConnection;
+import Exception.DbException;
+import Exception.infoMessages;
 
 
 public class passengerInfoDAOImpl implements passengerInfoDAO {
-	public int insertPassengerInfo(passengerInfo a) {
+	public int insertPassengerInfo(passengerInfo a) throws Exception {
 		try (Connection con = TestConnection.connection();) {
 			String sql = "insert into passenger_details(booking_id,user_id,bus_id,passenger_name,age,gender,mobile_number,no_of_tickets) values (sequence_booking_id.nextval,?,?,?,?,?,?,?)";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
@@ -57,12 +59,21 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 			}
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-			return 0;
+			//e.printStackTrace();
+			throw new DbException(infoMessages.INSERTPASSENGERINFO);
+			
+			
 		}
+catch (Exception e) {
+			
+			//e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
+		}
+
 	}
 
-	public ArrayList<passengerInfo> BookingDetails(int bookingId) {
+	public ArrayList<passengerInfo> BookingDetails(int bookingId) throws Exception {
 		try (Connection con = TestConnection.connection();) {
 			String sql5 = "select *from passenger_details where booking_id=?";
 			try (PreparedStatement pst5 = con.prepareStatement(sql5);) {
@@ -90,13 +101,20 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			throw new DbException(infoMessages.BOOKINGDETAILS);
+			
 
+		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
 		}
 
 	}
 
-	public void cancelBooking(int bookingId) {
+	public void cancelBooking(int bookingId) throws Exception {
 		try (Connection con = TestConnection.connection();) {
 			String sql6 = "update passenger_details set booking_status= 'cancelled' where booking_id=?";
 			try (PreparedStatement pst6 = con.prepareStatement(sql6);) {
@@ -109,7 +127,7 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 					pst7.setInt(2, bookingId);
 					pst7.executeUpdate();
 
-					String sql8 = "update payment_status set paid_status= 'returned' where booking_id=?";
+					String sql8 = "update payment_status set paid_status= 'cancelled' where booking_id=?";
 					try (PreparedStatement pst8 = con.prepareStatement(sql8);) {
 						pst8.setInt(1, bookingId);
 						pst8.executeUpdate();
@@ -120,17 +138,25 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 							pst9.executeUpdate();
 						}
 					}*/
-				}}
+				}
+					}
 			}
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+			throw new DbException(infoMessages.CANCELBOOKING);
 
+		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
 		}
 
 	}
 
-	public boolean validateBookingId(int bookingId) {
+	public boolean validateBookingId(int bookingId) throws Exception {
 
 		try (Connection con = TestConnection.connection();) {
 			String bId = "select booking_id from passenger_details where booking_id=?";
@@ -153,12 +179,20 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			return false;
+			throw new DbException(infoMessages.VALIDATEBOOKINGID);
+			
+		
+		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
 		}
 
 	}
 
-	public boolean validateBusId(int busId) {
+	public boolean validateBusId(int busId) throws Exception {
 		try (Connection con = TestConnection.connection();) {
 			String bus = "select bus_id from bus_details where bus_id = ?";
 			try (PreparedStatement smt9 = con.prepareStatement(bus);) {
@@ -180,11 +214,17 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			return false;
+			throw new DbException(infoMessages.VALIDATEBUSID);
 
 		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
+		}
 	}
-	public int totalPrice(int bookingId) {
+	public int totalPrice(int bookingId) throws Exception {
 		try (Connection con = TestConnection.connection();) {
 			String sql = "select total_price from payment_status where booking_id=? ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
@@ -201,12 +241,20 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
-			return 0;
+			throw new DbException(infoMessages.TOTALPRICE);
+			
+			
+		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
 		}
 	}
 
 	@Override
-	public ArrayList<passengerInfo> MyBookings(int userId) {
+	public ArrayList<passengerInfo> MyBookings(int userId) throws Exception {
 		try (Connection con = TestConnection.connection();) {
 			String sql5 = "select *from passenger_details where user_id=? and booking_status='booked'";
 			try (PreparedStatement pst5 = con.prepareStatement(sql5);) {
@@ -234,8 +282,15 @@ public class passengerInfoDAOImpl implements passengerInfoDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			throw new DbException(infoMessages.MYBOOKINGDETAILS);
+			
 
+		}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new DbException(infoMessages.CONNECTION);
+			
 		}
 
 	
