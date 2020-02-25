@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import CancelBooking.testCancelBooking;
-import creditcard.Card;
 import creditcard.PaymentResponse;
 import logger.Logger;
 
